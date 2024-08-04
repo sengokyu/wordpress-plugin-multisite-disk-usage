@@ -1,0 +1,28 @@
+services:
+  db:
+    image: docker.io/bitnami/mariadb:11.4
+    environment:
+      - MARIADB_ROOT_PASSWORD=pass
+      - MARIADB_USER=wp
+      - MARIADB_PASSWORD=wp
+      - MARIADB_DATABASE=wp
+
+  wp:
+    image: docker.io/bitnami/wordpress:5
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - WORDPRESS_DATABASE_HOST=db
+      - WORDPRESS_DATABASE_USER=wp
+      - WORDPRESS_DATABASE_PASSWORD=wp
+      - WORDPRESS_DATABASE_NAME=wp
+      - WORDPRESS_ENABLE_MULTISITE=yes
+      - WORDPRESS_MULTISITE_NETWORK_TYPE=subfolder
+      - WORDPRESS_MULTISITE_HOST=licky.local:8080
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    links:
+      - db
+    volumes:
+      - ./volumes/wordpress:/bitnami/wordpress

@@ -25,4 +25,4 @@ services:
     links:
       - db
     volumes:
-      - ./volumes/wordpress:/bitnami/wordpress
+      - ./src/multisite-disk-usage:/bitnami/wordpress/wp-content/plugins/multisite-disk-usage
